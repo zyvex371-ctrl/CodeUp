@@ -3,109 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DevLivre - Aprenda Programação</title>
+    <title>DevLivre - Escola de Programação</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: #f8fafc; display: flex; flex-direction: column; height: 100vh; height: 100dvh; overflow: hidden; }
+        body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #0b0f19; color: #f8fafc; display: flex; flex-direction: column; height: 100vh; height: 100dvh; overflow: hidden; }
         
-        header { background: #1e293b; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
-        h1 { font-size: 16px; color: #38bdf8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        /* Cabeçalho Elegante */
+        header { background: #111827; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1f2937; flex-shrink: 0; box-shadow: 0 4px 20px rgba(0,0,0,0.4); z-index: 10; }
+        .logo-area { display: flex; align-items: center; gap: 8px; }
+        h1 { font-size: 15px; color: #38bdf8; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
         
-        .nav-controls { display: flex; gap: 8px; }
-        .nav-btn { background: #334155; color: #f8fafc; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        .nav-btn:hover { background: #38bdf8; color: #0f172a; }
+        .nav-controls { display: flex; gap: 6px; align-items: center; }
+        .nav-btn { background: #1f2937; color: #f8fafc; border: 1px solid #374151; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .nav-btn:hover { background: #38bdf8; color: #0b0f19; border-color: #38bdf8; }
 
-        .main-container { display: flex; flex: 1; height: calc(100vh - 55px); overflow: hidden; }
+        /* Estrutura Principal */
+        .main-container { display: flex; flex-direction: column; flex: 1; height: calc(100vh - 53px); overflow: hidden; }
         
-        /* Painel de Teoria */
-        .lesson-panel { width: 45%; background: #1e293b; border-right: 1px solid #334155; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
-        .lesson-tag { background: #0284c7; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; width: fit-content; text-transform: uppercase; }
-        .lesson-title { font-size: 18px; color: #f8fafc; font-weight: 700; }
-        .lesson-text { font-size: 13px; line-height: 1.6; color: #cbd5e1; }
-        .code-example { background: #090d16; padding: 10px; border-radius: 6px; font-family: monospace; color: #38bdf8; font-size: 12px; border: 1px solid #334155; }
-        .challenge-box { background: rgba(56, 189, 248, 0.1); border-left: 3px solid #38bdf8; padding: 10px; border-radius: 0 6px 6px 0; font-size: 13px; color: #e2e8f0; }
+        /* Painel Superior (Teoria e Desafio) */
+        .lesson-panel { background: #111827; border-bottom: 1px solid #1f2937; padding: 16px; overflow-y: auto; max-height: 42vh; display: flex; flex-direction: column; gap: 10px; }
+        .lesson-header-row { display: flex; justify-content: space-between; align-items: center; }
+        .lesson-tag { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+        .lesson-title { font-size: 17px; color: #ffffff; font-weight: 700; }
+        .lesson-text { font-size: 13px; line-height: 1.5; color: #94a3b8; }
+        .code-example { background: #030712; padding: 10px; border-radius: 8px; font-family: 'Fira Code', monospace; color: #38bdf8; font-size: 12px; border: 1px solid #1f2937; }
+        
+        .challenge-box { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 10px; border-radius: 8px; font-size: 12px; color: #d1fae5; display: flex; flex-direction: column; gap: 8px; }
+        .check-btn { background: #059669; color: white; border: none; padding: 6px 14px; border-radius: 6px; font-weight: bold; font-size: 11px; cursor: pointer; align-self: flex-start; transition: 0.2s; }
+        .check-btn:hover { background: #047857; }
 
-        /* Painel do Editor e Resultado */
-        .editor-panel { width: 55%; display: flex; flex-direction: column; background: #0f172a; }
-        .editor-box { flex: 1; display: flex; flex-direction: column; border-bottom: 1px solid #334155; }
-        .panel-header { background: #1e293b; padding: 8px 14px; font-size: 11px; color: #94a3b8; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
+        /* Painel Inferior (Editor e Visualização) */
+        .workspace { flex: 1; display: flex; flex-direction: column; background: #0b0f19; overflow: hidden; }
+        .editor-container { flex: 1; display: flex; flex-direction: column; border-bottom: 1px solid #1f2937; min-height: 110px; }
+        .panel-label { background: #111827; padding: 6px 14px; font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; border-top: 1px solid #1f2937; }
         
-        textarea { flex: 1; background: #090d16; color: #38bdf8; padding: 14px; border: none; font-family: 'Courier New', Courier, monospace; font-size: 13px; outline: none; resize: none; line-height: 1.5; }
+        textarea { flex: 1; background: #030712; color: #38bdf8; padding: 12px; border: none; font-family: 'Fira Code', monospace; font-size: 13px; outline: none; resize: none; line-height: 1.5; }
         
-        .preview-box { flex: 1; background: white; color: black; display: flex; flex-direction: column; }
+        .preview-container { flex: 1; background: white; color: black; display: flex; flex-direction: column; min-height: 100px; }
         iframe { flex: 1; border: none; width: 100%; background: white; }
-
-        @media (max-width: 768px) {
-            .main-container { flex-direction: column; }
-            .lesson-panel { width: 100%; height: 42%; }
-            .editor-panel { width: 100%; height: 58%; }
-        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>⚡ DevLivre</h1>
+        <div class="logo-area">
+            <h1>⚡ DevLivre</h1>
+        </div>
         <div class="nav-controls">
-            <button class="nav-btn" onclick="mudarLicao(-1)">⬅️ Anterior</button>
-            <span id="lesson-counter" style="font-size: 12px; color: #94a3b8; font-weight: bold; align-self: center;">1/4</span>
-            <button class="nav-btn" onclick="mudarLicao(1)">Próxima ➡️</button>
+            <button class="nav-btn" onclick="mudarLicao(-1)">⬅️ Ant</button>
+            <span id="lesson-counter" style="font-size: 11px; color: #94a3b8; font-weight: 700;">1/6</span>
+            <button class="nav-btn" onclick="mudarLicao(1)">Próx ➡️</button>
         </div>
     </header>
 
     <div class="main-container">
-        <!-- Lado Esquerdo: Aulas Dinâmicas -->
-        <div class="lesson-panel" id="lesson-panel-content">
-            <!-- Conteúdo injetado pelo JavaScript -->
-        </div>
+        <!-- Teoria e Missão -->
+        <div class="lesson-panel" id="lesson-panel-content"></div>
 
-        <!-- Lado Direito: Editor e Visualização -->
-        <div class="editor-panel">
-            <div class="editor-box">
-                <div class="panel-header">✏️ Editor de Código HTML</div>
-                <textarea id="code-editor" oninput="atualizarVisualizacao()"></textarea>
+        <!-- Editor e Tela Final -->
+        <div class="workspace">
+            <div class="editor-container">
+                <div class="panel-label">✏️ Editor de Código (HTML)</div>
+                <textarea id="code-editor" oninput="atualizarVisualizacao()" placeholder="Digite seu código aqui..."></textarea>
             </div>
-            <div class="preview-box">
-                <div class="panel-header" style="background: #e2e8f0; color: #475569;">👁️ Resultado na Tela do Usuário</div>
+            <div class="preview-container">
+                <div class="panel-label" style="background: #e2e8f0; color: #475569;">👁️ Resultado na Tela</div>
                 <iframe id="preview-frame"></iframe>
             </div>
         </div>
     </div>
 
     <script>
-        // Lista de Lições completas e interativas
         const licoes = [
             {
-                tag: "Lição 1 de 4 • Títulos",
-                titulo: "O Cabeçalho Principal (H1)",
-                texto: "No HTML, usamos a tag <strong>&lt;h1&gt;</strong> para criar o título mais importante da página. O texto que fica dentro dele aparece bem grande e em destaque.",
-                exemplo: "<h1>Meu Primeiro Site</h1>",
+                tag: "Lição 1 • Estrutura",
+                titulo: "O Título Principal (H1)",
+                texto: "No HTML, usamos a tag <strong>&lt;h1&gt;</strong> para criar o cabeçalho mais importante de uma página web.",
+                exemplo: "<h1>Meu Site Incrível</h1>",
                 codigoInicial: "<h1>Olá Mundo!</h1>",
-                desafio: "Mude o texto dentro do &lt;h1&gt; para o seu nome e veja a mágica acontecer na tela!"
+                desafio: "Mude o texto dentro do &lt;h1&gt; para o seu próprio nome.",
+                validar: (codigo) => codigo.includes("<h1") && codigo.includes("</h1>") && !codigo.includes("Olá Mundo!")
             },
             {
-                tag: "Lição 2 de 4 • Parágrafos",
-                titulo: "Escrevendo Textos com Parágrafos (P)",
-                texto: "Para colocar textos normais, descrições ou histórias, usamos a tag <strong>&lt;p&gt;</strong> (de *Paragraph*). Ela organiza as frases em blocos de texto limpos.",
-                exemplo: "<p>Estou a aprender programação do zero!</p>",
-                codigoInicial: "<h1>Sobre Mim</h1>\n<p>Eu adoro criar jogos e aplicativos.</p>",
-                desafio: "Adicione um segundo parágrafo contando qual jogo você mais gosta de jogar!"
+                tag: "Lição 2 • Textos",
+                titulo: "Parágrafos (P)",
+                texto: "Para escrever blocos de texto, descrições ou artigos, usamos a tag <strong>&lt;p&gt;</strong>.",
+                exemplo: "<p>Estou a aprender a programar do zero.</p>",
+                codigoInicial: "<h1>Sobre Mim</h1>\n<p>Escreva algo sobre você aqui...</p>",
+                desafio: "Adicione um parágrafo &lt;p&gt; contando o que você gosta de fazer.",
+                validar: (codigo) => codigo.includes("<p") && codigo.includes("</p>")
             },
             {
-                tag: "Lição 3 de 4 • Botões",
-                titulo: "Criando Botões Clicáveis",
-                texto: "A tag <strong>&lt;button&gt;</strong> cria um botão interativo na tela. É com ele que os usuários podem clicar para enviar formulários ou interagir com o site.",
+                tag: "Lição 3 • Interação",
+                titulo: "Botões Clicáveis (Button)",
+                texto: "A tag <strong>&lt;button&gt;</strong> cria um botão interativo na tela onde os usuários podem clicar.",
                 exemplo: "<button>Clique Aqui</button>",
-                codigoInicial: "<h1>Minha Loja Virtual</h1>\n<p>Compre itens incríveis aqui.</p>\n<button>Comprar Agora</button>",
-                desafio: "Mude o texto do botão para 'Inscrever-se'!"
+                codigoInicial: "<h1>Minha Loja</h1>\n<button>Comprar Agora</button>",
+                desafio: "Mude o texto do botão para 'Inscrever-se'.",
+                validar: (codigo) => codigo.includes("<button") && codigo.includes("</button>") && codigo.toLowerCase().includes("inscrever-se")
             },
             {
-                tag: "Lição 4 de 4 • Misturando Tudo",
-                titulo: "Montando uma Página Completa",
-                texto: "Agora é hora de juntar tudo o que você aprendeu! Um site real mistura títulos grandes, parágrafos explicativos e botões de ação em uma única estrutura.",
-                exemplo: "<h1>Título</h1>\n<p>Texto...</p>\n<button>Botão</button>",
-                codigoInicial: "<h1>Meu Portfólio</h1>\n<p>Bem-vindo ao meu site oficial!</p>\n<button>Entrar em Contato</button>",
-                desafio: "Crie um site completinho com um título, dois parágrafos e dois botões diferentes!"
+                tag: "Lição 4 • Navegação",
+                titulo: "Links da Web (A)",
+                texto: "Para criar links que levam para outros sites ou páginas, usamos a tag <strong>&lt;a&gt;</strong> com o atributo <code>href</code>.",
+                exemplo: '<a href="https://google.com">Ir para o Google</a>',
+                codigoInicial: '<h1>Meus Links</h1>\n<a href="https://github.com">Visitar o GitHub</a>',
+                desafio: "Crie um link &lt;a&gt; para qualquer site que você goste.",
+                validar: (codigo) => codigo.includes("<a ") && codigo.includes("href=") && codigo.includes("</a>")
+            },
+            {
+                tag: "Lição 5 • Organização",
+                titulo: "Listas de Tópicos (UL / LI)",
+                texto: "Para listar itens em tópicos, usamos <strong>&lt;ul&gt;</strong> (lista) e <strong>&lt;li&gt;</strong> (cada item da lista).",
+                exemplo: "<ul>\n  <li>Maçã</li>\n  <li>Banana</li>\n</ul>",
+                codigoInicial: "<h1>Minha Lista de Compras</h1>\n<ul>\n  <li>Arroz</li>\n  <li>Feijão</li>\n</ul>",
+                desafio: "Adicione um terceiro item &lt;li&gt; na lista com outro alimento.",
+                validar: (codigo) => codigo.includes("<ul>") && codigo.includes("<li>") && codigo.includes("</li>")
+            },
+            {
+                tag: "Lição 6 • Projeto Final",
+                titulo: "Criando seu Perfil Completo",
+                texto: "Chegou o momento de juntar tudo! Crie um site contendo um Título, um Parágrafo e um Botão.",
+                exemplo: "<h1>Meu Perfil</h1>\n<p>Desenvolvedor Web</p>\n<button>Seguir</button>",
+                codigoInicial: "<h1>Meu Portfólio</h1>\n<p>Estudando HTML.</p>\n<button>Contato</button>",
+                desafio: "Monte uma página completa e clique em Verificar Missão!",
+                validar: (codigo) => codigo.includes("<h1") && codigo.includes("<p") && codigo.includes("<button")
             }
         ];
 
@@ -113,19 +135,21 @@
 
         function carregarLicao() {
             const licao = licoes[licaoAtual];
-            document.getElementById('lesson-counter.innerHTML').innerText = (licaoAtual + 1) + '/' + licoes.length;
             
             document.getElementById('lesson-panel-content').innerHTML = `
-                <div class="lesson-tag">${licao.tag}</div>
+                <div class="lesson-header-row">
+                    <span class="lesson-tag">${licao.tag}</span>
+                </div>
                 <h2 class="lesson-title">${licao.titulo}</h2>
                 <p class="lesson-text">${licao.texto}</p>
                 <div class="code-example">${licao.exemplo.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
                 <div class="challenge-box">
-                    <strong>🎯 Desafio:</strong> ${licao.desafio}
+                    <span><strong>🎯 Missão:</strong> ${licao.desafio}</span>
+                    <button class="check-btn" onclick="verificarDesafio()">Verificar Missão ✅</button>
                 </div>
             `;
             
-            document.getElementById('lesson-counter').innerText = (licaoAtual + 1) + " / " + licoes.length;
+            document.getElementById('lesson-counter').innerText = (licaoAtual + 1) + "/" + licoes.length;
             document.getElementById('code-editor').value = licao.codigoInicial;
             atualizarVisualizacao();
         }
@@ -135,6 +159,22 @@
             if (licaoAtual < 0) licaoAtual = 0;
             if (licaoAtual >= licoes.length) licaoAtual = licoes.length - 1;
             carregarLicao();
+        }
+
+        function verificarDesafio() {
+            const codigo = document.getElementById('code-editor').value;
+            const licao = licoes[licaoAtual];
+            
+            if (licao.validar(codigo)) {
+                alert("🎉 Parabéns! Missão cumprida com sucesso! Você mandou muito bem.");
+                if (licaoAtual < licoes.length - 1) {
+                    mudarLicao(1);
+                } else {
+                    alert("🏆 VOCÊ CONCLUIU TODAS AS LIÇÕES DO DEV LIVRE! Você é um programador de verdade agora!");
+                }
+            } else {
+                alert("⚠️ Quase lá! Siga atentamente as instruções da missão e ajuste o código no editor.");
+            }
         }
 
         function atualizarVisualizacao() {
