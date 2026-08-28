@@ -2,74 +2,141 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MeuApp - Aprenda Programação Livre</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DevLivre - Aprenda Programação</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: #f8fafc; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: #f8fafc; display: flex; flex-direction: column; height: 100vh; height: 100dvh; overflow: hidden; }
         
-        header { background: #1e293b; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; }
-        h1 { font-size: 18px; color: #38bdf8; font-weight: 700; text-transform: uppercase; }
+        header { background: #1e293b; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        h1 { font-size: 16px; color: #38bdf8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
         
-        .main-container { display: flex; flex: 1; height: calc(100vh - 55px); }
-        
-        /* Painel de Lições / Teoria */
-        .lesson-panel { width: 40%; background: #1e293b; border-right: 1px solid #334155; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
-        .lesson-title { font-size: 20px; color: #38bdf8; }
-        .lesson-text { font-size: 14px; line-height: 1.6; color: #cbd5e1; }
-        .code-example { background: #090d16; padding: 10px; border-radius: 6px; font-family: monospace; color: #38bdf8; font-size: 13px; border: 1px solid #334155; }
+        .nav-controls { display: flex; gap: 8px; }
+        .nav-btn { background: #334155; color: #f8fafc; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .nav-btn:hover { background: #38bdf8; color: #0f172a; }
 
-        /* Painel do Editor e Resultado ao Vivo */
-        .editor-panel { width: 60%; display: flex; flex-direction: column; background: #0f172a; }
-        .editor-box { flex: 1; display: flex; flex-direction: column; border-bottom: 1px solid #334155; }
-        .panel-header { background: #1e293b; padding: 8px 16px; font-size: 12px; color: #94a3b8; font-weight: bold; text-transform: uppercase; }
+        .main-container { display: flex; flex: 1; height: calc(100vh - 55px); overflow: hidden; }
         
-        textarea { flex: 1; background: #090d16; color: #38bdf8; padding: 16px; border: none; font-family: 'Courier New', Courier, monospace; font-size: 14px; outline: none; resize: none; line-height: 1.5; }
+        /* Painel de Teoria */
+        .lesson-panel { width: 45%; background: #1e293b; border-right: 1px solid #334155; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
+        .lesson-tag { background: #0284c7; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; width: fit-content; text-transform: uppercase; }
+        .lesson-title { font-size: 18px; color: #f8fafc; font-weight: 700; }
+        .lesson-text { font-size: 13px; line-height: 1.6; color: #cbd5e1; }
+        .code-example { background: #090d16; padding: 10px; border-radius: 6px; font-family: monospace; color: #38bdf8; font-size: 12px; border: 1px solid #334155; }
+        .challenge-box { background: rgba(56, 189, 248, 0.1); border-left: 3px solid #38bdf8; padding: 10px; border-radius: 0 6px 6px 0; font-size: 13px; color: #e2e8f0; }
+
+        /* Painel do Editor e Resultado */
+        .editor-panel { width: 55%; display: flex; flex-direction: column; background: #0f172a; }
+        .editor-box { flex: 1; display: flex; flex-direction: column; border-bottom: 1px solid #334155; }
+        .panel-header { background: #1e293b; padding: 8px 14px; font-size: 11px; color: #94a3b8; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        textarea { flex: 1; background: #090d16; color: #38bdf8; padding: 14px; border: none; font-family: 'Courier New', Courier, monospace; font-size: 13px; outline: none; resize: none; line-height: 1.5; }
         
         .preview-box { flex: 1; background: white; color: black; display: flex; flex-direction: column; }
         iframe { flex: 1; border: none; width: 100%; background: white; }
 
         @media (max-width: 768px) {
             .main-container { flex-direction: column; }
-            .lesson-panel { width: 100%; height: 45%; }
-            .editor-panel { width: 100%; height: 55%; }
+            .lesson-panel { width: 100%; height: 42%; }
+            .editor-panel { width: 100%; height: 58%; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>🚀 MeuApp - Estudos Livres</h1>
-        <span style="font-size: 13px; color: #94a3b8;">Lição 1: O Primeiro Botão</span>
+        <h1>⚡ DevLivre</h1>
+        <div class="nav-controls">
+            <button class="nav-btn" onclick="mudarLicao(-1)">⬅️ Anterior</button>
+            <span id="lesson-counter" style="font-size: 12px; color: #94a3b8; font-weight: bold; align-self: center;">1/4</span>
+            <button class="nav-btn" onclick="mudarLicao(1)">Próxima ➡️</button>
+        </div>
     </header>
 
     <div class="main-container">
-        <div class="lesson-panel">
-            <h2 class="lesson-title">Criando seu primeiro Botão</h2>
-            <p class="lesson-text">
-                No HTML, usamos a tag <strong>&lt;button&gt;</strong> para criar elementos clicáveis na tela. Tudo o que você escrever entre a abertura e o fechamento será o texto do botão.
-            </p>
-            <div class="code-example">
-                &lt;button&gt;Clique Aqui&lt;/button&gt;
-            </div>
-            <p class="lesson-text">
-                <strong>Desafio:</strong> Mude o código no editor ao lado para que o botão mostre a palavra <strong>"Enviar"</strong> e veja o resultado atualizar na mesma hora!
-            </p>
+        <!-- Lado Esquerdo: Aulas Dinâmicas -->
+        <div class="lesson-panel" id="lesson-panel-content">
+            <!-- Conteúdo injetado pelo JavaScript -->
         </div>
 
+        <!-- Lado Direito: Editor e Visualização -->
         <div class="editor-panel">
             <div class="editor-box">
-                <div class="panel-header">✏️ Digite seu Código HTML Aqui:</div>
-                <textarea id="code-editor" oninput="atualizarVisualizacao()">&lt;button&gt;teste&lt;/button&gt;</textarea>
+                <div class="panel-header">✏️ Editor de Código HTML</div>
+                <textarea id="code-editor" oninput="atualizarVisualizacao()"></textarea>
             </div>
             <div class="preview-box">
-                <div class="panel-header" style="background: #e2e8f0; color: #475569;">👁️ Resultado na Tela:</div>
+                <div class="panel-header" style="background: #e2e8f0; color: #475569;">👁️ Resultado na Tela do Usuário</div>
                 <iframe id="preview-frame"></iframe>
             </div>
         </div>
     </div>
 
     <script>
+        // Lista de Lições completas e interativas
+        const licoes = [
+            {
+                tag: "Lição 1 de 4 • Títulos",
+                titulo: "O Cabeçalho Principal (H1)",
+                texto: "No HTML, usamos a tag <strong>&lt;h1&gt;</strong> para criar o título mais importante da página. O texto que fica dentro dele aparece bem grande e em destaque.",
+                exemplo: "<h1>Meu Primeiro Site</h1>",
+                codigoInicial: "<h1>Olá Mundo!</h1>",
+                desafio: "Mude o texto dentro do &lt;h1&gt; para o seu nome e veja a mágica acontecer na tela!"
+            },
+            {
+                tag: "Lição 2 de 4 • Parágrafos",
+                titulo: "Escrevendo Textos com Parágrafos (P)",
+                texto: "Para colocar textos normais, descrições ou histórias, usamos a tag <strong>&lt;p&gt;</strong> (de *Paragraph*). Ela organiza as frases em blocos de texto limpos.",
+                exemplo: "<p>Estou a aprender programação do zero!</p>",
+                codigoInicial: "<h1>Sobre Mim</h1>\n<p>Eu adoro criar jogos e aplicativos.</p>",
+                desafio: "Adicione um segundo parágrafo contando qual jogo você mais gosta de jogar!"
+            },
+            {
+                tag: "Lição 3 de 4 • Botões",
+                titulo: "Criando Botões Clicáveis",
+                texto: "A tag <strong>&lt;button&gt;</strong> cria um botão interativo na tela. É com ele que os usuários podem clicar para enviar formulários ou interagir com o site.",
+                exemplo: "<button>Clique Aqui</button>",
+                codigoInicial: "<h1>Minha Loja Virtual</h1>\n<p>Compre itens incríveis aqui.</p>\n<button>Comprar Agora</button>",
+                desafio: "Mude o texto do botão para 'Inscrever-se'!"
+            },
+            {
+                tag: "Lição 4 de 4 • Misturando Tudo",
+                titulo: "Montando uma Página Completa",
+                texto: "Agora é hora de juntar tudo o que você aprendeu! Um site real mistura títulos grandes, parágrafos explicativos e botões de ação em uma única estrutura.",
+                exemplo: "<h1>Título</h1>\n<p>Texto...</p>\n<button>Botão</button>",
+                codigoInicial: "<h1>Meu Portfólio</h1>\n<p>Bem-vindo ao meu site oficial!</p>\n<button>Entrar em Contato</button>",
+                desafio: "Crie um site completinho com um título, dois parágrafos e dois botões diferentes!"
+            }
+        ];
+
+        let licaoAtual = 0;
+
+        function carregarLicao() {
+            const licao = licoes[licaoAtual];
+            document.getElementById('lesson-counter.innerHTML').innerText = (licaoAtual + 1) + '/' + licoes.length;
+            
+            document.getElementById('lesson-panel-content').innerHTML = `
+                <div class="lesson-tag">${licao.tag}</div>
+                <h2 class="lesson-title">${licao.titulo}</h2>
+                <p class="lesson-text">${licao.texto}</p>
+                <div class="code-example">${licao.exemplo.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+                <div class="challenge-box">
+                    <strong>🎯 Desafio:</strong> ${licao.desafio}
+                </div>
+            `;
+            
+            document.getElementById('lesson-counter').innerText = (licaoAtual + 1) + " / " + licoes.length;
+            document.getElementById('code-editor').value = licao.codigoInicial;
+            atualizarVisualizacao();
+        }
+
+        function mudarLicao(direcao) {
+            licaoAtual += direcao;
+            if (licaoAtual < 0) licaoAtual = 0;
+            if (licaoAtual >= licoes.length) licaoAtual = licoes.length - 1;
+            carregarLicao();
+        }
+
         function atualizarVisualizacao() {
             const codigo = document.getElementById('code-editor').value;
             const iframe = document.getElementById('preview-frame');
@@ -79,8 +146,7 @@
             doc.close();
         }
 
-        // Executa assim que a página carrega
-        window.onload = atualizarVisualizacao;
+        window.onload = carregarLicao;
     </script>
 </body>
 </html>
